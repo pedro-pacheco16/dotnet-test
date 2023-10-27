@@ -26,6 +26,7 @@ namespace dotnet_test.Service.Implements
             try
             {
                 var Resposta = await _context.Produtos
+                    .Include(p => p.Categoria)
                     .FirstAsync(i => i.id == id);
 
                 return Resposta;
@@ -38,6 +39,7 @@ namespace dotnet_test.Service.Implements
         public async Task<IEnumerable<Produto>> GetByNome(string nome)
         {
             var Produto = await _context.Produtos
+              .Include(p => p.Categoria)
               .Where(p => p.Nome.Contains(nome))
               .ToListAsync();
 
@@ -47,6 +49,7 @@ namespace dotnet_test.Service.Implements
         public async Task<IEnumerable<Produto>> GetByPreco(decimal preco)
         {
             var produto = await _context.Produtos
+            .Include(p => p.Categoria)
             .Where(p => p.Preco == preco)
             .ToListAsync();
 
@@ -55,12 +58,20 @@ namespace dotnet_test.Service.Implements
 
         public async Task<Produto?> Create(Produto produto)
         {
+            if (produto.Categoria is not null)
+            {
+                var BuscarCategoria = await _context.Categorias.FindAsync(produto.Categoria.id);
+
+                if (BuscarCategoria is null)
+                    return null;
+
+                produto.Categoria = BuscarCategoria;
+            }
 
             await _context.Produtos.AddAsync(produto);
             await _context.SaveChangesAsync();
 
             return produto;
-
         }
 
         public async Task<Produto?> Update(Produto produto)
@@ -69,6 +80,14 @@ namespace dotnet_test.Service.Implements
 
             if (ProdutoUpdate is null)
                 return null;
+
+            if (produto.Categoria is not null)
+            {
+                var buscaCategoria = await _context.Categorias.FindAsync(produto.Categoria.id);
+
+                if (buscaCategoria == null)
+                    return null;
+            }
 
             _context.Entry(ProdutoUpdate).State = EntityState.Detached;
 
