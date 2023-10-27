@@ -1,3 +1,6 @@
+using FluentValidation;
+using dotnet_test.Validator;
+using dotnet_test.Model;
 using dotnet_test.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +22,8 @@ namespace dotnet_test
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString)
             );
+
+            builder.Services.AddTransient<IValidator<Produto>, ProdutoValidator>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

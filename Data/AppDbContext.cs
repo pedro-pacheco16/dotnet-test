@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using dotnet_test.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_test.Data
 {
@@ -8,6 +9,9 @@ namespace dotnet_test.Data
         {
 
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Produto>().ToTable("tb_produto");
+        }
     }
 }
