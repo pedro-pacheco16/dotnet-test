@@ -15,6 +15,10 @@ namespace dotnet_test
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
 
             builder.Services.AddControllers();
 
@@ -30,6 +34,8 @@ namespace dotnet_test
             builder.Services.AddTransient<IValidator<Categoria>, CategoriaValidator>();
 
             builder.Services.AddScoped<IProdutoService, ProdutoService>();
+
+            builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

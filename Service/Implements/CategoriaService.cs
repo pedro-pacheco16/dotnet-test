@@ -3,7 +3,7 @@ using dotnet_test.Model;
 using dotnet_test.Service;
 using Microsoft.EntityFrameworkCore;
 
-namespace kotlins.Service.Implements
+namespace dotnet_test.Service.Implements
 {
     public class CategoriaService : ICategoriaService
     {
