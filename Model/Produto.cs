@@ -15,5 +15,7 @@ namespace dotnet_test.Model
 
         [Column(TypeName = "Decimal(6,2)")]
         public decimal Preco { get; set; }
+
+        public virtual Categoria? Categoria { get; set; }
     }
 }
