@@ -13,5 +13,7 @@ namespace dotnet_test.Data
         {
             modelBuilder.Entity<Produto>().ToTable("tb_produto");
         }
+
+        public DbSet<Produto> Produtos { get; set; } = null!;
     }
 }

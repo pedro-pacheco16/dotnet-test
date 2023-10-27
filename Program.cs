@@ -1,3 +1,5 @@
+using dotnet_test.Service;
+using dotnet_test.Service.Implements;
 using FluentValidation;
 using dotnet_test.Validator;
 using dotnet_test.Model;
@@ -24,6 +26,8 @@ namespace dotnet_test
             );
 
             builder.Services.AddTransient<IValidator<Produto>, ProdutoValidator>();
+
+            builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
