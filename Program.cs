@@ -53,7 +53,6 @@ namespace dotnet_test
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();
